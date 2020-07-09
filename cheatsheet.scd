@@ -1,5 +1,5 @@
 /*
-  Project: Bophex-Flim
+  Project: working-with-supercollider
   File: cheatsheet.scd
   Author: Leonard M Reidy
   Source:
