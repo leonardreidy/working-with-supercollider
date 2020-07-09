@@ -198,6 +198,12 @@ s.boot;
 // Reboot server
 s.reboot;
 
+// Quit server
+s.quit;
+
+// Break glass in case of zombie processes or other emergencies
+Server.killAll;
+
 // Get average CPU load
 s.avgCPU;
 
@@ -205,11 +211,21 @@ s.avgCPU;
 /* [PLOTTING SCOPING] Plotting and Scoping                                                */
 /* ---------------------------------------------------------------------------------------*/
 (
+  // Plot multiple SinOscs
   {[SinOsc.ar(440), SinOsc.ar(440), SinOsc.ar(440)+SinOsc.ar(440)]}.plot;
 )
 
 (
+  // As above, but more concise
   {a = SinOsc.ar(440, 0, 0.5); [a, a, a+a]}.plot;
+)
+
+(
+    // Scope in time domain
+    s.scope;
+
+    // Scope in frequency domain
+    s.freqscope;
 )
 
 /* -------------------------------------------------------------------------------------- */
