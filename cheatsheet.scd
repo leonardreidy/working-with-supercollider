@@ -2,8 +2,11 @@
   Project: working-with-supercollider
   File: cheatsheet.scd
   Author: Leonard M Reidy
-  Source:
-  Docs: [ http://supercollider.sourceforge.net/wiki/index.php/User_FAQ ]
+  Source: https://github.com/leonardreidy/working-with-supercollider/blob/master/cheatsheet.scd
+  Docs: [
+    http://supercollider.sourceforge.net/wiki/index.php/User_FAQ,
+    https://doc.sccode.org/Overviews/Documents.html
+  ]
   Description: This file contains widely useful code snippets for common tasks
 
   General Notes
@@ -77,8 +80,7 @@
 (
   // Declare a variable to store a function
   var c, d;
-  c = ();
-  d = ();
+
   // Define a function to convert a frequency into the corresponding midi value
   // and assign to the variable c
   // |freq| is syntactic sugar for the function's parameter. It means, in
@@ -86,14 +88,14 @@
   // 'syntactic sugar,' it simply means an alternate way of writing some piece of code to make
   // it easier to read or understand. Some languages provide syntactic sugar to make the
   // developer experience a little better; Supercollider's sclang is one such language
-  c.freqToMidi = { |freq| 69 + (12 * log(220/freq) / log(2)); };
+  c = { |freq| 69 + (12 * log(220/freq) / log(2)); };
 
   // Here's how the function definition would look without the syntactic sugar
-  d.freqToMidi = { arg freq; 69 + (12 * log(220/freq) / log(2)); };
+  d = { arg freq; 69 + (12 * log(220/freq) / log(2)); };
 
   // Execute (call) the function
-  c.freqToMidi.value(440);
-  d.freqToMidi.value(440);
+  c.value(440);
+  d.value(440);
 )
 
 /* -------------------------------------------------------------------------------------- */
@@ -155,7 +157,7 @@
 // SPRING
 (
  {
-   var trigger =LFNoise0.ar(1)>0;
+   var trigger = LFNoise0.ar(1)>0;
    var signal = SinOsc.ar(Spring.ar(trigger,1,4e-06)*1220);
    var env = EnvGen.kr(Env.perc(0.001,5),trigger);
    Out.ar(0, Pan2.ar(signal * env, 0));
@@ -203,6 +205,40 @@ s.avgCPU;
 
 (
   {a = SinOsc.ar(440, 0, 0.5); [a, a, a+a]}.plot;
+)
+
+/* -------------------------------------------------------------------------------------- */
+/* [PATTERNS SEQUENCING] Patterns and sequencing                                          */
+/* -------------------------------------------------------------------------------------- */
+
+// Stepper
+(
+  {SinOsc.ar( Stepper.kr(Impulse.kr(10), 0, 4, 16, 1) * 100, 0, 0.2)}.play;
+)
+
+(
+  // Same code, but in Stereo - note !2 before the closing brace
+  {SinOsc.ar( Stepper.kr(Impulse.kr(10), 0, 4, 16, 1) * 100, 0, 0.2) !2}.play;
+)
+
+(
+  // Stepper with polling - see post window
+  {SinOsc.ar(Stepper.kr(Impulse.kr(6), 0, 5, 15, -3).poll(6, "stepper") * 80, 0, 0.2)}.play;
+)
+
+(
+  {SinOsc.ar(Lag.kr(Stepper.kr(Impulse.kr(6), 0, 5, 25, -4) * 90, 6.reciprocal), 0, 0.2)}.play;
+)
+
+// Select
+(
+  {
+	var scale, cycle;
+	// scale = Array.fill(12,{ arg i; 60 + i }).midicps;
+	scale = [60, 61, 63, 64, 65, 67, 68, 69, 70].midicps; // we fill an array with a scale
+	cycle = scale.size / 2;
+	SinOsc.ar(Select.kr( LFSaw.kr(0.4, 1, cycle, cycle), scale ));
+  }.play;
 )
 
 
