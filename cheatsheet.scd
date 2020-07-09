@@ -7,7 +7,12 @@
     http://supercollider.sourceforge.net/wiki/index.php/User_FAQ,
     https://doc.sccode.org/Overviews/Documents.html
   ]
-  Description: This file contains widely useful code snippets for common tasks
+  Description: This file contains widely useful code snippets for common tasks. At present,
+  almost all of the code below was selected from Thor Magnusson's Scoring Sound. As time
+  goes on I hope to add more and more to this file as I encounter it. If you want to see
+  more of Thor Magnusson's Scoring Sound you can find it at:
+
+    https://leanpub.com/ScoringSound
 
   General Notes
 
