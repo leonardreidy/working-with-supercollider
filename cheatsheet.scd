@@ -266,9 +266,17 @@ s.avgCPU;
 /* -------------------------------------------------------------------------------------- */
 /* [MISC] Miscellaneous                                                                   */
 /* ---------------------------------------------------------------------------------------*/
-  // Test the impact of relatively large scale creation on your machine
 (
+  // Test the impact of relatively large scale creation on your machine
   // we add 500 oscillators together and the CPU is around 20% on a low end machine
   // Intel I3 @ 2GHz
   {({SinOsc.ar(4444.4.rand, 0, 0.005)}!500).sum}.play;
+)
+
+/* -------------------------------------------------------------------------------------- */
+/* [INTROSPECTION] Introspection                                                          */
+/* ---------------------------------------------------------------------------------------*/
+(
+  // Observe all OSC messages sent to server
+  s.dumpOSC(1);
 )
