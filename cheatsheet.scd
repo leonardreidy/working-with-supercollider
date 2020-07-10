@@ -78,9 +78,76 @@
 /* [FUNCTIONS] Functions in Supercollider                                                 */
 /* ---------------------------------------------------------------------------------------*/
 
-  // Functions are defined between braces, and the value of the last line evaluated is returned
-  // Functions are executed (called) with the function name and the value method as in the
-  // examples below:
+  // Functions are defined most precisely in the documentation as follows:
+  // "A Function is an expression which defines operations to be performed
+  // when it is sent the 'value' message."
+  // As defined, Functions in Supercollider are in fact objects, since they
+  // respond, as objects do, to messages, importantly, the 'value' message.
+  // Sending the 'value' message to a Function is what executes the function.
+  // Functions are defined between braces, and the value of the last line
+  // evaluated is returned. See examples below:
+(
+    // Declare two variables, one to store a function, the other to store
+    // the results of executing that function
+    var makeADict, aDict;
+
+    // An example of a function that returns a Dictionary
+    makeADict = {
+        var firstVal, secondVal, thirdVal;
+        firstVal = 0;
+        secondVal = 1;
+        thirdVal = 2;
+        // This is the data structure that makeADict will return, a
+        // so-called Dictionary, which is an associative collection
+        // mapping keys to values.
+        (a: firstVal, b: secondVal, c: thirdVal);
+    };
+
+    // Call the example function and assign the result to a variable
+    aDict = makeADict.value;
+
+    // Print the contents of the variable to the Post Window
+    aDict.postln;
+
+    // Print the value associated with the a key of the aDict dictionary
+    aDict.a.postln;
+
+    // Print the value associated with the b key of the aDict dictionary
+    aDict.b.postln;
+
+    // Print the value associated with the c key of the aDict dictionary
+    aDict.c.postln;
+
+)
+
+(
+    // The previous example with parameters instead of hardwired values
+    var makeADict, aDict;
+
+    makeADict = {
+        arg firstVal, secondVal, thirdVal;
+        (a: firstVal, b: secondVal, c: thirdVal);
+    };
+
+    aDict = makeADict.value(0,1,2);
+    aDict.postln;
+    aDict.a.postln;
+    aDict.b.postln;
+    aDict.c.postln;
+)
+
+(
+    // The previous example with syntactic sugar
+    var makeADict, aDict;
+
+    makeADict = { | firstVal, secondVal, thirdVal | (a: firstVal, b: secondVal, c: thirdVal); };
+
+    aDict = makeADict.value(0,1,2);
+    aDict.postln;
+    aDict.a.postln;
+    aDict.b.postln;
+    aDict.c.postln;
+)
 
 (
   // Declare a variable to store a function
@@ -279,4 +346,7 @@ s.avgCPU;
 (
   // Observe all OSC messages sent to server
   s.dumpOSC(1);
+
+  // Introspect the interface of the Function
+  Function.dumpInterface;
 )
