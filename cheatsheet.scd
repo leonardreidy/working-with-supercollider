@@ -274,8 +274,11 @@ Server.killAll;
 // Get average CPU load
 s.avgCPU;
 
+// Free all synths
+s.freeAll;
+
 /* -------------------------------------------------------------------------------------- */
-/* [PLOTTING SCOPING] Plotting and Scoping                                                */
+/* [PLOTTING SCOPING TRACING] Plotting, Scoping, Tracing                                  */
 /* ---------------------------------------------------------------------------------------*/
 (
   // Plot multiple SinOscs
@@ -293,6 +296,26 @@ s.avgCPU;
 
     // Scope in frequency domain
     s.freqscope;
+)
+
+(
+  // Tracing is most useful for observing streams, patterns and the like in
+  // real time. Here is an example:
+  SynthDef.new(\sine, {
+      arg freq=440, attack=0.005, release=0.3, amp=1, pan=0;
+      var sig, env;
+      sig = SinOsc.ar(freq);
+      env = EnvGen.kr(Env.new([0,1,0],[attack,release],[1,-1]),doneAction:2);
+      sig = Pan2.ar(sig, pan, amp);
+      Out.ar(0, sig);
+  }).add;
+)
+
+(
+  p = Pbind(
+	\instrument, \sine,
+	\dur, Pseq([0.6,0.15,0.15],inf).trace;
+  ).play;
 )
 
 /* -------------------------------------------------------------------------------------- */
