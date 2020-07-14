@@ -268,14 +268,30 @@ s.reboot;
 // Quit server
 s.quit;
 
-// Break glass in case of zombie processes or other emergencies
-Server.killAll;
+// Raise the server GUI widget
+// Note that it responds to many useful keyboard shortcuts
+// Make sure the widget is in focus and click the relevant
+// key. Here are some useful functions and the corresponding
+// keyboard shortcut:
+//
+//   i/o levels [i]
+//   graphical view of node tree [p]
+//   scope window [s]
+//   freqscope [f]
+//   toggle dumping of OSC messages to post window [d]
+//   toggle mute [m]
+//
+// Raise the server widget:
+s.makeGui;
 
 // Get average CPU load
 s.avgCPU;
 
 // Free all synths
 s.freeAll;
+
+// Break glass in case of zombie processes or other emergencies
+Server.killAll;
 
 /* -------------------------------------------------------------------------------------- */
 /* [PLOTTING SCOPING TRACING] Plotting, Scoping, Tracing                                  */
